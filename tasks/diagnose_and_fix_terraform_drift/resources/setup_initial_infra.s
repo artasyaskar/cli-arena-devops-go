@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 echo "INFO: Navigating to Terraform configuration directory: $(pwd)/resources"
 # Ensure script is run from task's root directory or resources directory itself
