@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e # Exit on any error
 
 echo "INFO: Starting verification process for Terraform drift remediation."
