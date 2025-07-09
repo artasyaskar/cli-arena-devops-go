@@ -1,23 +1,23 @@
-# Base image for Go applications
+
+
+# Use official lightweight Go image
 FROM golang:1.21-alpine
 
-# Set working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Copy Go modules and download dependencies
+# Copy Go module files and download dependencies
 COPY go.mod go.sum ./
 RUN go mod download
 
-# Copy the rest of the application code
+# Copy the entire project (adjust this if needed)
 COPY . .
 
-# Build the Go app (if applicable, otherwise this can be adjusted)
-# RUN go build -o /app/main ./src/...
+# Build the Go application from src/main.go
+RUN go build -o cli-arena-devops-go ./src/main.go
 
-# Expose port (if needed by the application)
-# EXPOSE 8080
+# Expose the HTTP port your app listens on
+EXPOSE 8080
 
-# Command to run the application (replace with actual command)
-# CMD ["/app/main"]
-# For now, a placeholder command
-CMD ["tail", "-f", "/dev/null"]
+# Run the compiled binary
+CMD ["./cli-arena-devops-go"]

@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
   go-app:
     build:
-      context: ./src/reverseproxy
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./src/reverseproxy/Dockerfile
     # If not exposing to host, remove ports. Nginx will access it via the internal network.
     # ports:
     #   - "8080" # Port for Nginx to connect to, not necessarily exposed to host

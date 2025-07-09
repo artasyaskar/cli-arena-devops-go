@@ -26,7 +26,7 @@ setup:
 		if ! command -v tflint >/dev/null 2>&1; then \
 			curl -s https://api.github.com/repos/terraform-linters/tflint/releases/latest | \
 			grep "browser_download_url.*_linux_amd64.zip" | cut -d : -f 2,3 | tr -d \" | wget -qi - -O /tmp/tflint.zip && \
-			unzip /tmp/tflint.zip -d /usr/local/bin && rm /tmp/tflint.zip && tflint --init || \
+			sudo unzip /tmp/tflint.zip -d /usr/local/bin && rm /tmp/tflint.zip && tflint --init || \
 			echo "Failed to install tflint. Please install it manually."; \
 		fi; \
 	}
@@ -48,7 +48,7 @@ test:
 	@echo "Running all tests..."
 	# Run Go application tests
 	@echo "Running Go application tests (if any)..."
-	$(GO_CMD) test ./... -v
+	(cd src/reverseproxy && $(GO_CMD) test ./... -v)
 	# Example: Run tests within a Docker container if needed
 	# $(DOCKER_COMPOSE) exec -T app go test ./... -v
 	@echo "Running task tests..."
@@ -72,7 +72,7 @@ lint:
 	@echo "Linting Go and Terraform files..."
 	@echo "Linting Go files..."
 	@if command -v golangci-lint >/dev/null 2>&1; then \
-		golangci-lint run ./...; \
+		(cd src/reverseproxy && golangci-lint run ./...); \
 	else \
 		echo "golangci-lint not found. Please run 'make setup'."; \
 	fi
