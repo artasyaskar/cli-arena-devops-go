@@ -1,0 +1,42 @@
+id: configure_cross_account_iam_role_terraform
+title: Configure Secure Cross-Account IAM Role Access using Terraform for CI/CD
+description: |
+  You need to establish secure cross-account IAM access between two AWS accounts: a "CI/CD" account (source) and a "Target" account (destination).
+  A CI/CD pipeline running in the "CI/CD" account needs permissions to deploy resources (e.g., list S3 buckets, manage ECS services - simulated by S3 list access for this task) in the "Target" account.
+
+  Your tasks are:
+  1.  In the `resources/target_account_infra/` directory, write Terraform configuration (`iam_roles.tf`) to create:
+      a.  An IAM role (e.g., `CICDDeployRole`) in the "Target" account.
+      b.  This role must have a trust policy that allows an IAM entity (e.g., a specific IAM user or another role ARN, which will be provided as `var.cicd_principal_arn`) from the "CI/CD" account to assume it.
+      c.  Attach an IAM policy to this role granting least-privilege permissions: specifically, permission to list all S3 buckets (`s3:ListAllMyBuckets`) and describe S3 buckets (`s3:GetBucketLocation`, `s3:ListBucket`) in the "Target" account.
+  2.  In the `resources/cicd_account_infra/` directory, write Terraform configuration (`iam_policies.tf`) to create:
+      a.  An IAM policy (e.g., `AssumeTargetAccountRolePolicy`) in the "CI/CD" account.
+      b.  This policy should grant permission to the CI/CD IAM principal (`var.cicd_principal_arn` which you can simulate as a local user/role for testing) to assume the `CICDDeployRole` created in the "Target" account. (The ARN of this role will be an output from the target account's Terraform apply).
+  3.  You are provided with `setup_accounts.sh` that simulates applying these Terraform configurations in two stages (first target, then CI/CD account after getting role ARN output).
+  4.  Write a script `test_assume_role.sh` (this will be part of your `solution.sh` or a separate file called by it) that:
+      a.  Uses the AWS CLI (`aws sts assume-role`) with credentials of the CI/CD principal.
+      b.  Assumes the `CICDDeployRole` in the "Target" account.
+      c.  Uses the temporary credentials obtained from assume-role to perform an action allowed by the role's policy (e.g., `aws s3 ls` in the "Target" account context).
+      d.  Verify that an action *not* allowed by the policy (e.g., `aws iam list-users`) is denied.
+  5.  The Terraform configurations should be placed in their respective directories. Your main `solution.sh` should orchestrate the creation and testing.
+
+  Assume account IDs: "CI/CD Account ID" = `111111111111` (mocked), "Target Account ID" = `222222222222` (mocked).
+  The CI/CD Principal ARN to be trusted will be `arn:aws:iam::111111111111:user/cicd_user` (simulated).
+difficulty: Hard
+estimated_time: 90m
+tags: [terraform, aws, iam, security, cross-account-access, ci-cd, sts]
+
+files_to_modify:
+  - resources/target_account_infra/iam_roles.tf (create this file)
+  - resources/cicd_account_infra/iam_policies.tf (create this file)
+  - solution.sh (to orchestrate apply and create `test_assume_role.sh` logic)
+
+success_criteria:
+  - Terraform configurations for both "Target" and "CI/CD" accounts are created correctly.
+  - `CICDDeployRole` is created in the "Target" account with the correct trust policy and permissions.
+  - `AssumeTargetAccountRolePolicy` is created in the "CI/CD" account (or attached to the CI/CD principal).
+  - The `test_assume_role.sh` (or equivalent logic in `solution.sh`):
+    - Successfully assumes the `CICDDeployRole` from the "CI/CD" account context.
+    - Successfully lists S3 buckets in the "Target" account context using assumed role credentials.
+    - Fails (is denied) when attempting to list IAM users in the "Target" account context using assumed role credentials.
+  - The `verify.sh` script confirms these outcomes, possibly by inspecting IAM configurations via AWS CLI (mocked if needed) and running the test script.
