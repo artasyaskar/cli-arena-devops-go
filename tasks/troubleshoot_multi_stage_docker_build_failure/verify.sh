@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 FIXED_DOCKERFILE="Dockerfile.fixed"
