@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e # Exit on one error, but we want to report all failures. So, use a flag.
 
 ENHANCED_WORKFLOW_FILE=".github/workflows/ci.enhanced.yml" # Expected output from solution
