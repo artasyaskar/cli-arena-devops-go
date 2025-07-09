@@ -1,20 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 COMPOSE_FILE="./resources/docker-compose.setup.yml"
 APP_SERVICE_NAME="app_service" # From docker-compose.setup.yml
 APP_VOLUME_NAME="restoreapplicationfromfailedkubernetesnodesimulation_app_data_volume" # Default Docker compose naming: <projectdir>_<volumename>
-                                                                                  # Or if explicitly named in compose: app_data_volume
-                                                                                  # Let's assume the task expects the explicit name `app_data_volume`
-                                                                                  # and the docker-compose file defines it as such.
-                                                                                  # The compose file I generated uses `app_data_volume` as the key,
-                                                                                  # which docker compose CLI will prefix with project name.
-                                                                                  # To be robust, we should get the actual volume name.
+                                                                                 
 PROJECT_NAME=$(basename "$PWD" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]*//g')
-# If the task is run from .../restore_..._simulation/, project name will be restore...simulation
-# So, volume name will be restore...simulation_app_data_volume.
-# Let's make it simpler by explicitly naming the volume in docker-compose. (I'll update the compose file for this)
-# UPDATE: I will modify the docker-compose.setup.yml to use an explicit volume name `app_data_explicit_volume` to simplify this.
 
 APP_EXPLICIT_VOLUME_NAME="app_data_explicit_volume" # Will update docker-compose.setup.yml for this
 
@@ -29,9 +20,7 @@ echo "INFO: Backup directory is $BACKUP_DIR"
 
 # Step 2: Build and start the application
 echo "INFO: Building and starting application using $COMPOSE_FILE..."
-# Use explicit project name to make volume name predictable if not explicitly named.
-# docker-compose -f "$COMPOSE_FILE" -p "$PROJECT_NAME" up -d --build
-# With explicit volume name in compose file, -p is less critical for volume name.
+
 docker-compose -f "$COMPOSE_FILE" up -d --build
 
 echo "INFO: Waiting for application to start (10 seconds)..."
