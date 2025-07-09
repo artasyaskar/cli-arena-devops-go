@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "repository": "cli-arena-devops-go",
+  "total_tasks": 0,
+  "categories": {
+    "feature_development": [],
+    "bug_fixes": [],
+    "refactoring": [],
+    "testing": [],
+    "infra": []
+  },
+  "difficulty_distribution": {
+    "easy": 0,
+    "medium": 0,
+    "hard": 0
+  },
+  "estimated_total_time": 0,
+  "tasks": [
+  ]
+}
