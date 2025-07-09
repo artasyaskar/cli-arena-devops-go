@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 TARGET_INFRA_DIR="./resources/target_account_infra"
