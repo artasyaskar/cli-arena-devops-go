@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  app_v1:
+    build:
+      context: ./app_v1
+      dockerfile: Dockerfile
+    image: go_canary_service:v1 # Explicitly name the image for v1
+    container_name: app_v1_container
+    ports:
+      - "8081:8081" # Expose v1 for direct access if needed, Nginx will proxy
+    environment:
+      - PORT=8081
+    networks:
+      - canary_net
+
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: nginx_proxy_v1
+    ports:
+      - "80:80" # Nginx listens on port 80
+    volumes:
+      - ./nginx/nginx.v1.conf:/etc/nginx/nginx.conf:ro # Mount initial Nginx config
+    depends_on:
+      - app_v1
+    networks:
+      - canary_net
+
+networks:
+  canary_net:
+    driver: bridge
