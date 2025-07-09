@@ -19,17 +19,19 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: '1.21'
+          cache: true # Explicitly enable Go module caching (default is true)
 
-      - name: Set up Docker and Docker Compose
+      - name: Set up Docker Compose (standalone)
         run: |
-          # Install Docker
-          sudo apt-get update
-          sudo apt-get install -y docker.io
-          # Install Docker Compose (standalone version)
+          # GitHub runners usually have Docker Engine. We need docker-compose (standalone v1 or a compatible v2 alias).
+          # Installing a specific version of docker-compose standalone for compatibility with Makefile.
+          # Using a more recent version of v1 series if available, or stick to a known working one.
+          # Let's use the widely available 1.29.2 for now.
           sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
-          # Verify installations
+          echo "Docker version:"
           docker --version
+          echo "Docker Compose (standalone) version:"
           docker-compose --version
 
       - name: Setup Terraform
@@ -37,10 +39,11 @@ jobs:
         with:
           terraform_version: 1.5.0 # Specify a recent version
 
-      - name: Verify Docker and Docker Compose
-        run: |
-          docker --version
-          docker-compose --version
+      - name: Cache Docker layers
+        uses: satackey/action-docker-layer-caching@v0.0.11
+        # Ignore errors from this step for now so it doesn't block the pipeline
+        # if there are issues with caching on the runner.
+        continue-on-error: true
 
       - name: Run Makefile setup
         run: make setup
