@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 ORIGINAL_WORKFLOW_PATH="./resources/.github/workflows/ci.original.yml"
