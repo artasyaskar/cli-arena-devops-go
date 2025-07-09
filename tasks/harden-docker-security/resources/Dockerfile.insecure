@@ -1,0 +1,23 @@
+FROM golang:1.19-alpine
+
+RUN apk update && apk add curl git
+
+WORKDIR /app
+
+# Simulate application code (a simple Go server)
+COPY main.go .
+COPY go.mod .
+COPY go.sum .
+
+# Vulnerability: Hardcoded dummy API key
+ENV API_KEY=dummy_value_replace_me_in_production
+
+# Vulnerability: Building as root, files owned by root
+RUN go build -o /app/server .
+
+# Vulnerability: No HEALTHCHECK defined
+# Vulnerability: Exposing a port, but not necessarily the one app uses or clearly documented
+EXPOSE 8080
+
+# Vulnerability: Running as ROOT
+CMD ["/app/server"]
