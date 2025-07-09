@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 APP_SERVICE_NAME="app_service" # As in docker-compose files
