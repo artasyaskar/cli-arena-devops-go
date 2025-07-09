@@ -15,7 +15,10 @@ func helloHandler(w http.ResponseWriter, r *http.Request) { // Renamed function 
 	// In a real reverse proxy, you'd copy many headers and the body.
 	userAgent := r.Header.Get("User-Agent")
 	responseJSON := fmt.Sprintf(`{"message": "Hello from placeholder!", "user_agent": "%s"}`, userAgent)
-	fmt.Fprint(w, responseJSON) // Changed Fprintln to Fprint
+	if _, err := fmt.Fprint(w, responseJSON); err != nil {
+		log.Printf("Error writing response: %v", err)
+		http.Error(w, "Failed to write response", http.StatusInternalServerError)
+	}
 }
 
 func main() {
