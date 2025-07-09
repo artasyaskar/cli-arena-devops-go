@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  go-app:
+    build:
+      context: ./src/reverseproxy
+      dockerfile: Dockerfile
+    # If not exposing to host, remove ports. Nginx will access it via the internal network.
+    # ports:
+    #   - "8080" # Port for Nginx to connect to, not necessarily exposed to host
+    expose:
+      - "8080" # Expose port to other services on the same network
+    environment:
+      - APP_PORT=8080
+    networks:
+      - app_network
+    # Add a healthcheck for the Go app (optional but good)
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s # Give it time to start
+
+  nginx:
+    image: nginx:1.25-alpine # Using a specific version of nginx alpine
+    ports:
+      - "80:80" # Expose NGINX on host port 80
+    volumes:
+      - ./tasks/setup-nginx-reverse-proxy/resources/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      go-app:
+        condition: service_healthy # Wait for go-app to be healthy
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"] # Check NGINX itself
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+networks:
+  app_network:
+    driver: bridge
