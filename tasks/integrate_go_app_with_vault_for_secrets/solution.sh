@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 APP_MAIN_GO="./resources/app/main.go"
@@ -256,7 +256,7 @@ EOF_VAULT_SETUP_CMDS
 VAULT_SETUP_SCRIPT_PATH="./setup_vault_secrets.sh"
 echo "INFO: Creating helper script '$VAULT_SETUP_SCRIPT_PATH' to write secrets to Vault..."
 cat << 'EOF_VAULT_HELPER' > "$VAULT_SETUP_SCRIPT_PATH"
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 VAULT_CONTAINER_NAME="vault_server" # Must match docker-compose.yml
 
