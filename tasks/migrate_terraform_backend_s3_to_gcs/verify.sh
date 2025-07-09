@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 TERRAFORM_DIR="./resources/terraform_project"
