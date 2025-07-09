@@ -1,0 +1,55 @@
+name: CI Pipeline for cli-arena-devops-go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.21'
+
+      - name: Set up Docker and Docker Compose
+        run: |
+          # Install Docker
+          sudo apt-get update
+          sudo apt-get install -y docker.io
+          # Install Docker Compose (standalone version)
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          # Verify installations
+          docker --version
+          docker-compose --version
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0 # Specify a recent version
+
+      - name: Verify Docker and Docker Compose
+        run: |
+          docker --version
+          docker-compose --version
+
+      - name: Run Makefile setup
+        run: make setup
+
+      - name: Run Makefile lint
+        run: make lint
+
+      - name: Run Makefile test
+        run: make test
+
+      - name: Run Makefile build (Verify)
+        run: make build
