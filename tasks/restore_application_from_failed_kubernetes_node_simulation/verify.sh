@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 SETUP_SCRIPT="./resources/setup_app_and_backup.sh"
