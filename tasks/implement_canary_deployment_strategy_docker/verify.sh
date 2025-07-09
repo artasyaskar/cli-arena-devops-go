@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 DOCKER_COMPOSE_CANARY="docker-compose.canary.yml"
