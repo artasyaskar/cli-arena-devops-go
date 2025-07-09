@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 HARDENED_DOCKERFILE="Dockerfile.hardened"
 IMAGE_NAME="hardened-app-test:latest"
