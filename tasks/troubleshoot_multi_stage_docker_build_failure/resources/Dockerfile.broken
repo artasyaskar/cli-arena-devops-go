@@ -1,0 +1,45 @@
+# Stage 1: Builder
+FROM golang:1.20-bullseye AS builder
+# Using bullseye instead of alpine to make CGO potentially enabled by default if not careful,
+# and to make the builder stage larger than necessary.
+
+# BUG 1: WORKDIR not set early enough, COPY commands might be relative to / instead of /app
+COPY . /app
+WORKDIR /app
+
+# BUG 2: Go build command issues
+#   - CGO_ENABLED might not be 0, leading to larger binary or issues if final stage is alpine and builder isn't.
+#   - Output path is /go/bin/app, which is not standard for WORKDIR /app.
+#   - No -ldflags "-w -s" to strip debug info, making binary larger.
+RUN go build -o /go/bin/app main.go
+
+# BUG 3: Forgetting to create a non-root user in builder or final stage, or not using it.
+
+
+# Stage 2: Final image
+FROM debian:bullseye-slim
+# BUG 4: Using debian:bullseye-slim instead of alpine makes the image larger than it needs to be.
+# It also means CGO compiled binaries from a different base (e.g. alpine builder) might not work.
+# Here, builder is bullseye, final is bullseye-slim, so CGO compatibility is less of an issue,
+# but still good to disable CGO for static linking if possible.
+
+WORKDIR /app
+
+# BUG 5: Incorrect COPY from builder stage.
+#   - Path `/go/bin/app` is correct based on RUN command in builder, but what if that was a bug too?
+#   - What if `main.go` was copied instead of the compiled binary?
+COPY --from=builder /app/main.go .
+# Should be: COPY --from=builder /go/bin/app .
+
+# BUG 6: No non-root user setup and usage in final stage. App will run as root.
+# RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+# USER appuser
+
+# BUG 7: Exposing a port that the application might not be using, or not exposing at all.
+# The app uses 8080 by default.
+EXPOSE 80
+
+# BUG 8: CMD is trying to run the source file, not the compiled binary.
+# Also, if binary was copied to /app/app, this would be wrong.
+CMD ["go", "run", "main.go"]
+# Should be: CMD ["./app"] if binary copied as 'app' to WORKDIR.
