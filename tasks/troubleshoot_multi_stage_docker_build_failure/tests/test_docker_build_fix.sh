@@ -1,11 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e # Exit immediately if a command exits with a non-zero status.
 
 TASK_ROOT_DIR=$(pwd)
-# Path to the user's solution (which should create Dockerfile.fixed)
-# For this test, we assume solution.sh actually *creates* Dockerfile.fixed from scratch.
-# If solution.sh is meant to guide the user who then creates it, this test needs adjustment.
-# Based on current solution.sh, it does create Dockerfile.fixed.
+
 SOLUTION_SCRIPT="$TASK_ROOT_DIR/solution.sh"
 VERIFY_SCRIPT="$TASK_ROOT_DIR/verify.sh"
 BROKEN_DOCKERFILE_PATH="$TASK_ROOT_DIR/resources/Dockerfile.broken"
