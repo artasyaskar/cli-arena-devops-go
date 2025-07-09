@@ -1,20 +1,33 @@
 {
   "version": "1.0",
   "repository": "cli-arena-devops-go",
-  "total_tasks": 0,
+  "total_tasks": 1,
   "categories": {
     "feature_development": [],
     "bug_fixes": [],
     "refactoring": [],
     "testing": [],
-    "infra": []
+    "infra": ["harden-docker-security"]
   },
   "difficulty_distribution": {
     "easy": 0,
     "medium": 0,
-    "hard": 0
+    "hard": 1
   },
-  "estimated_total_time": 0,
+  "estimated_total_time_minutes": 45,
   "tasks": [
+    {
+      "id": "harden-docker-security",
+      "title": "Harden Insecure Dockerfile for Production Deployment",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 45,
+      "tags": ["docker", "security", "best-practices", "Dockerfile"],
+      "description_file": "tasks/harden-docker-security/task.yaml",
+      "solution_file": "tasks/harden-docker-security/solution.sh",
+      "verify_script": "tasks/harden-docker-security/verify.sh",
+      "tests_path": "tasks/harden-docker-security/tests/",
+      "resources_path": "tasks/harden-docker-security/resources/"
+    }
   ]
 }
