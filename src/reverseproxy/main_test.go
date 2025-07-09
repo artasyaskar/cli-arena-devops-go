@@ -9,7 +9,9 @@ import (
 
 func TestMainHandler(t *testing.T) {
 	// Set a default port for testing if APP_PORT is not set
-	os.Setenv("APP_PORT", "8083") // Use a different port for testing to avoid conflict
+	if err := os.Setenv("APP_PORT", "8083"); err != nil { // Use a different port for testing to avoid conflict
+		t.Fatalf("Failed to set APP_PORT for testing: %v", err)
+	}
 
 	// Create a request to pass to our handler. We don't have any query parameters for now, so nil is fine.
 	req, err := http.NewRequest("GET", "/", nil)
@@ -48,10 +50,12 @@ func TestMainHandler(t *testing.T) {
 		t.Errorf("handler returned empty body")
 	}
 	// A very basic check that it's JSON-like
-	if !(rr.Body.String()[0] == '{' && rr.Body.String()[len(rr.Body.String())-1] == '}') && !(rr.Body.String()[0] == '[' && rr.Body.String()[len(rr.Body.String())-1] == ']') {
-		t.Errorf("response body does not look like JSON: %s", rr.Body.String())
+	bodyStr := rr.Body.String()
+	isJsonObject := bodyStr[0] == '{' && bodyStr[len(bodyStr)-1] == '}'
+	isJsonArray := bodyStr[0] == '[' && bodyStr[len(bodyStr)-1] == ']'
+	if !isJsonObject && !isJsonArray {
+		t.Errorf("response body does not look like JSON: %s", bodyStr)
 	}
-
 
 }
 
