@@ -2,6 +2,7 @@
 # The user's task is to modify this file to use a GCS backend.
 
 terraform {
+  required_version = ">= 0.12"
   backend "s3" {
     # Configuration will be dynamically inserted by setup_initial_s3_backend.sh
     # to ensure unique bucket names for testing.
