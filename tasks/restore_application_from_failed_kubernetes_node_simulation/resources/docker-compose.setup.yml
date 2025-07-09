@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app_service: # Name of the service running the Go app
+    build:
+      context: ./app # Path to Dockerfile and app source
+      dockerfile: Dockerfile
+    container_name: stateful_go_app_container
+    ports:
+      - "8080:8080" # Expose app's port to the host
+    volumes:
+      - app_data_explicit_volume:/data # Mount the named volume to /data in container
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
+
+volumes:
+  app_data_explicit_volume: # Define the named volume for persistent storage
+    name: app_data_explicit_volume # Explicitly name the volume
+    driver: local # Default Docker volume driver
