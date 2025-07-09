@@ -1,20 +1,20 @@
 {
   "version": "1.0",
   "repository": "cli-arena-devops-go",
-  "total_tasks": 1,
+  "total_tasks": 11,
   "categories": {
     "feature_development": [],
     "bug_fixes": [],
     "refactoring": [],
     "testing": [],
-    "infra": ["harden-docker-security"]
+    "infra": ["harden-docker-security", "diagnose_and_fix_terraform_drift", "implement_canary_deployment_strategy_docker", "troubleshoot_multi_stage_docker_build_failure", "migrate_terraform_backend_s3_to_gcs", "configure_cross_account_iam_role_terraform", "integrate_go_app_with_vault_for_secrets", "debug_terraform_dependent_resource_creation_failure", "setup_centralized_logging_docker_go_fluentd", "optimize_and_secure_ci_pipeline_for_go_terraform", "restore_application_from_failed_kubernetes_node_simulation"]
   },
   "difficulty_distribution": {
     "easy": 0,
     "medium": 0,
-    "hard": 1
+    "hard": 11
   },
-  "estimated_total_time_minutes": 45,
+  "estimated_total_time_minutes": 915,
   "tasks": [
     {
       "id": "harden-docker-security",
@@ -28,6 +28,136 @@
       "verify_script": "tasks/harden-docker-security/verify.sh",
       "tests_path": "tasks/harden-docker-security/tests/",
       "resources_path": "tasks/harden-docker-security/resources/"
+    },
+    {
+      "id": "diagnose_and_fix_terraform_drift",
+      "title": "Diagnose and Remediate Terraform State Drift for Critical Infrastructure",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 75,
+      "tags": ["terraform", "state-management", "aws", "drift-detection", "infrastructure-as-code", "iam", "s3"],
+      "description_file": "tasks/diagnose_and_fix_terraform_drift/task.yaml",
+      "solution_file": "tasks/diagnose_and_fix_terraform_drift/solution.sh",
+      "verify_script": "tasks/diagnose_and_fix_terraform_drift/verify.sh",
+      "tests_path": "tasks/diagnose_and_fix_terraform_drift/tests/",
+      "resources_path": "tasks/diagnose_and_fix_terraform_drift/resources/"
+    },
+    {
+      "id": "implement_canary_deployment_strategy_docker",
+      "title": "Implement a Canary Deployment Strategy for a Go Microservice using Docker Compose and Nginx",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 90,
+      "tags": ["docker", "docker-compose", "nginx", "canary-release", "microservices", "go", "traffic-management"],
+      "description_file": "tasks/implement_canary_deployment_strategy_docker/task.yaml",
+      "solution_file": "tasks/implement_canary_deployment_strategy_docker/solution.sh",
+      "verify_script": "tasks/implement_canary_deployment_strategy_docker/verify.sh",
+      "tests_path": "tasks/implement_canary_deployment_strategy_docker/tests/",
+      "resources_path": "tasks/implement_canary_deployment_strategy_docker/resources/"
+    },
+    {
+      "id": "troubleshoot_multi_stage_docker_build_failure",
+      "title": "Troubleshoot and Fix a Failing Multi-Stage Docker Build for a Go Application",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 60,
+      "tags": ["docker", "multi-stage-build", "go", "debugging", "optimization", "Dockerfile"],
+      "description_file": "tasks/troubleshoot_multi_stage_docker_build_failure/task.yaml",
+      "solution_file": "tasks/troubleshoot_multi_stage_docker_build_failure/solution.sh",
+      "verify_script": "tasks/troubleshoot_multi_stage_docker_build_failure/verify.sh",
+      "tests_path": "tasks/troubleshoot_multi_stage_docker_build_failure/tests/",
+      "resources_path": "tasks/troubleshoot_multi_stage_docker_build_failure/resources/"
+    },
+    {
+      "id": "migrate_terraform_backend_s3_to_gcs",
+      "title": "Securely Migrate Terraform Backend from AWS S3 to Google Cloud Storage (GCS)",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 75,
+      "tags": ["terraform", "backend-migration", "s3", "gcs", "state-management", "multi-cloud", "cli"],
+      "description_file": "tasks/migrate_terraform_backend_s3_to_gcs/task.yaml",
+      "solution_file": "tasks/migrate_terraform_backend_s3_to_gcs/solution.sh",
+      "verify_script": "tasks/migrate_terraform_backend_s3_to_gcs/verify.sh",
+      "tests_path": "tasks/migrate_terraform_backend_s3_to_gcs/tests/",
+      "resources_path": "tasks/migrate_terraform_backend_s3_to_gcs/resources/"
+    },
+    {
+      "id": "configure_cross_account_iam_role_terraform",
+      "title": "Configure Secure Cross-Account IAM Role Access using Terraform for CI/CD",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 90,
+      "tags": ["terraform", "aws", "iam", "security", "cross-account-access", "ci-cd", "sts"],
+      "description_file": "tasks/configure_cross_account_iam_role_terraform/task.yaml",
+      "solution_file": "tasks/configure_cross_account_iam_role_terraform/solution.sh",
+      "verify_script": "tasks/configure_cross_account_iam_role_terraform/verify.sh",
+      "tests_path": "tasks/configure_cross_account_iam_role_terraform/tests/",
+      "resources_path": "tasks/configure_cross_account_iam_role_terraform/resources/"
+    },
+    {
+      "id": "integrate_go_app_with_vault_for_secrets",
+      "title": "Integrate a Go Application with HashiCorp Vault for Dynamic Secret Retrieval",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 90,
+      "tags": ["go", "vault", "secrets-management", "docker", "docker-compose", "security", "api"],
+      "description_file": "tasks/integrate_go_app_with_vault_for_secrets/task.yaml",
+      "solution_file": "tasks/integrate_go_app_with_vault_for_secrets/solution.sh",
+      "verify_script": "tasks/integrate_go_app_with_vault_for_secrets/verify.sh",
+      "tests_path": "tasks/integrate_go_app_with_vault_for_secrets/tests/",
+      "resources_path": "tasks/integrate_go_app_with_vault_for_secrets/resources/"
+    },
+    {
+      "id": "debug_terraform_dependent_resource_creation_failure",
+      "title": "Debug and Resolve Terraform Failures Due to Implicit Dependencies and Timing Issues",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 75,
+      "tags": ["terraform", "debugging", "resource-dependency", "aws", "vpc", "networking", "infrastructure-as-code", "timing-issues"],
+      "description_file": "tasks/debug_terraform_dependent_resource_creation_failure/task.yaml",
+      "solution_file": "tasks/debug_terraform_dependent_resource_creation_failure/solution.sh",
+      "verify_script": "tasks/debug_terraform_dependent_resource_creation_failure/verify.sh",
+      "tests_path": "tasks/debug_terraform_dependent_resource_creation_failure/tests/",
+      "resources_path": "tasks/debug_terraform_dependent_resource_creation_failure/resources/"
+    },
+    {
+      "id": "setup_centralized_logging_docker_go_fluentd",
+      "title": "Implement Centralized Logging for a Dockerized Go Application using Fluentd with Advanced Parsing and Enrichment",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 105,
+      "tags": ["docker", "go", "logging", "fluentd", "observability", "docker-compose", "json", "log-parsing", "log-enrichment"],
+      "description_file": "tasks/setup_centralized_logging_docker_go_fluentd/task.yaml",
+      "solution_file": "tasks/setup_centralized_logging_docker_go_fluentd/solution.sh",
+      "verify_script": "tasks/setup_centralized_logging_docker_go_fluentd/verify.sh",
+      "tests_path": "tasks/setup_centralized_logging_docker_go_fluentd/tests/",
+      "resources_path": "tasks/setup_centralized_logging_docker_go_fluentd/resources/"
+    },
+    {
+      "id": "optimize_and_secure_ci_pipeline_for_go_terraform",
+      "title": "Optimize and Secure a CI/CD Pipeline for Go and Terraform Workflows using GitHub Actions",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 105,
+      "tags": ["ci-cd", "github-actions", "go", "terraform", "security", "optimization", "gosec", "tfsec", "checkov", "workflow"],
+      "description_file": "tasks/optimize_and_secure_ci_pipeline_for_go_terraform/task.yaml",
+      "solution_file": "tasks/optimize_and_secure_ci_pipeline_for_go_terraform/solution.sh",
+      "verify_script": "tasks/optimize_and_secure_ci_pipeline_for_go_terraform/verify.sh",
+      "tests_path": "tasks/optimize_and_secure_ci_pipeline_for_go_terraform/tests/",
+      "resources_path": "tasks/optimize_and_secure_ci_pipeline_for_go_terraform/resources/"
+    },
+    {
+      "id": "restore_application_from_failed_kubernetes_node_simulation",
+      "title": "Simulate Kubernetes Node Failure and Restore Stateful Application from Volume Backups",
+      "category": "infra",
+      "difficulty": "Hard",
+      "estimated_time_minutes": 105,
+      "tags": ["kubernetes-simulation", "disaster-recovery", "statefulset", "persistent-volumes", "backup-restore", "docker", "docker-compose", "go", "scripting"],
+      "description_file": "tasks/restore_application_from_failed_kubernetes_node_simulation/task.yaml",
+      "solution_file": "tasks/restore_application_from_failed_kubernetes_node_simulation/solution.sh",
+      "verify_script": "tasks/restore_application_from_failed_kubernetes_node_simulation/verify.sh",
+      "tests_path": "tasks/restore_application_from_failed_kubernetes_node_simulation/tests/",
+      "resources_path": "tasks/restore_application_from_failed_kubernetes_node_simulation/resources/"
     }
   ]
 }
