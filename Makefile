@@ -1,7 +1,7 @@
 .PHONY: setup build serve test lint clean
 
 # Variables
-DOCKER_COMPOSE = docker-compose
+DOCKER_COMPOSE = sudo docker-compose
 GO_FILES = $(shell find . -name '*.go' -not -path "./vendor/*")
 TF_FILES = $(shell find . -name '*.tf')
 APP_NAME = cli-arena-devops-go
