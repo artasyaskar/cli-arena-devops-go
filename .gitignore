@@ -1,0 +1,118 @@
+# Go
+#
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Go workspace file
+go.work
+
+# Docker
+#
+# Docker image archives
+*.tar
+*.tar.gz
+
+# Dockerfile specific
+Dockerfile.local
+
+# Docker Compose specific
+docker-compose.override.yml
+docker-compose.local.yml
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Build artifact / Binaries
+bin/
+build/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE / Editor specific
+.idea/
+.vscode/
+*.swp
+*~
+*.bak
+
+# Terraform
+#
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*.backup
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files, except .tfvars.example files
+*.tfvars
+!*.tfvars.example
+
+# Ignore override files as they are usually used for local customizations
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
+# example: *tfplan*
+tfplan*
+
+# Dotenv files
+.envrc
+.env.local
+
+# Logs
+logs
+*.log
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+ENV/
+env/
+pip-wheel-metadata/
+
+# Temp files
+tmp/
+temp/
