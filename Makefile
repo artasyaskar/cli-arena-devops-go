@@ -46,8 +46,9 @@ serve: build
 
 test:
 	@echo "Running all tests..."
-	# Placeholder for Go tests - will run task-specific tests
-	# $(GO_CMD) test ./... -v
+	# Run Go application tests
+	@echo "Running Go application tests (if any)..."
+	$(GO_CMD) test ./... -v
 	# Example: Run tests within a Docker container if needed
 	# $(DOCKER_COMPOSE) exec -T app go test ./... -v
 	@echo "Running task tests..."
