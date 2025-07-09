@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: go_logging_app
+    ports:
+      - "8080:8080" # Expose app port for direct access/testing
+    environment:
+      - PORT=8080
+
+    networks:
+      - logging_net
+
+networks:
+  logging_net:
+    driver: bridge
