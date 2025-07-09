@@ -4,12 +4,6 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
-variable "target_account_id" {
-  description = "AWS Account ID of the Target account"
-  type        = string
-  default     = "222222222222" # Mocked Target Account ID
-}
-
 variable "cicd_principal_arn" {
   description = "ARN of the IAM principal (user/role) in the CI/CD account that is allowed to assume the role"
   type        = string
