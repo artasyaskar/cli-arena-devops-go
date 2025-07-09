@@ -1,11 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 
 echo "INFO: Creating Dockerfile.fixed with the corrected multi-stage build."
 
-# The task requires the user to create Dockerfile.fixed.
-# This solution script generates the content of what Dockerfile.fixed should be.
-# In a real scenario, the user would manually create/edit Dockerfile.fixed.
+
 
 cat << EOF > Dockerfile.fixed
 # Stage 1: Builder
